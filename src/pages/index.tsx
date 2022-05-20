@@ -12,7 +12,7 @@ import {
   Text,
   useColorModeValue
 } from "@chakra-ui/react";
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 const Home: NextPage = () => {
@@ -90,3 +90,18 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const token = ctx.req.cookies["next-token"];
+  if (token) {
+  return{
+    redirect: {
+      destination: "/dashboard",
+      permanent: false,
+    }
+  }
+  }
+  return{
+    props: {},
+  }
+}

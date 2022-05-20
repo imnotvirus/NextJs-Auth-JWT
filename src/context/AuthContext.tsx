@@ -42,16 +42,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         email: data.email,
         password: data.password,
       });
-
-      console.log(response.data);
-
+      api.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
+      setUserInfo(response.data.user);
       setCookie(undefined, "next-token", response.data.token, {
         maxAge: 60 * 60 * 1,
       });
-      
-      api.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
-
-      setUserInfo(response.data.user);
       router.push("/dashboard");
     } catch (error: any) {
       console.log(error.response.data);
