@@ -5,7 +5,7 @@ import { ParsedUrlQuery } from "querystring";
 
 export const getApiClient = (ctx?: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>) => {
   const api = axios.create({
-    baseURL: process.env.API_BASE_URL,
+    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   });
   const { "next-token": token } = parseCookies(ctx);
 

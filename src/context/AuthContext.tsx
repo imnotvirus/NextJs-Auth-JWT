@@ -38,7 +38,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   async function signIn(data: signInData) {
     try {
-      const response = await api.post("http://localhost:4000/auth-user", {
+      const response = await api.post("/auth-user", {
         email: data.email,
         password: data.password,
       });
