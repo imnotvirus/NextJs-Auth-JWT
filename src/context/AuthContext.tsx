@@ -36,22 +36,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }, []);
 
-  async function signIn(data: signInData) {
-    try {
-      const response = await api.post("/auth-user", {
-        email: data.email,
-        password: data.password,
-      });
-      api.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
-      setUserInfo(response.data.user);
-      setCookie(undefined, "next-token", response.data.token, {
-        maxAge: 60 * 60 * 1,
-      });
-      router.push("/dashboard");
-    } catch (error: any) {
-      console.log(error.response.data);
-    }
-  }
+  const signIn = async (data: signInData) => {
+    const response = await api.post("/auth-user", {
+      email: data.email,
+      password: data.password,
+    });
+    api.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${response.data.token}`;
+    setUserInfo(response.data.user);
+    setCookie(undefined, "next-token", response.data.token, {
+      maxAge: 60 * 60 * 1,
+    });
+    router.push("/dashboard");
+  };
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, user: userInfo, signIn }}>
