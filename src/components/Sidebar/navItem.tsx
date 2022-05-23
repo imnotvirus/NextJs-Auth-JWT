@@ -1,4 +1,4 @@
-import { Box, Heading, HStack, Icon, Link, Text } from "@chakra-ui/react";
+import { Box, Heading, HStack, Icon, Link, Text, useBreakpointValue } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { NavItem as Item } from "./types";
@@ -10,6 +10,8 @@ type Props = {
 export const NavItem = ({ item }: Props) => {
   const { label } = item;
   const router = useRouter();
+  const isMobile = useBreakpointValue({ base: true, sm: false});
+
   if (item.type === "link") {
     const { icon } = item;
 
@@ -36,7 +38,7 @@ export const NavItem = ({ item }: Props) => {
               ml={8}
               color={isActive ? "brand.red" : "gray.light"}
               as={icon}
-            />
+            />{!isMobile &&
             <Text
               fontSize="md"
               fontWeight="medium"
@@ -45,7 +47,7 @@ export const NavItem = ({ item }: Props) => {
               color={isActive ? "brand.red" : "whiteAlpha.900"}
             >
               {label}
-            </Text>
+            </Text>}
             {isActive && <Box width={1} height={6} bg="brand.red" />}
           </HStack>
         </Link>
