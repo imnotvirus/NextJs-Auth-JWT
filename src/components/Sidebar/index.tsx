@@ -2,15 +2,18 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
-  Flex, Image,
+  Flex,
+  Image,
   List,
   ListItem,
   useBreakpointValue,
   VStack
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import React from "react";
 import { navItems } from "./navData";
 import { NavItem } from "./navItem";
+
 type Props = {
   isOpen: boolean;
   onToggle: () => void;
@@ -21,6 +24,7 @@ const Sidebar: React.FC<Props> = ({ isOpen, onToggle }) => {
 
   return (
     <Flex
+      as={motion.div}
       w={isOpen ? "260px" : "75px"}
       pos="sticky"
       left="5"
@@ -30,19 +34,23 @@ const Sidebar: React.FC<Props> = ({ isOpen, onToggle }) => {
       borderRadius={show ? "30px" : "15px"}
       flexDir="column"
       justifyContent="space-between"
+      transition='0.5s all'
     >
       <Box textAlign="center" w="full" pt={8} px={2} pb={4}>
-        <Flex flexDir={isOpen ?"row": 'column-reverse'} align="center" justify={"space-evenly"}>
+        <Flex
+          flexDir={isOpen ? "row" : "column-reverse"}
+          align="center"
+          justify={"space-evenly"}
+        >
           <Button mt={2} onClick={onToggle}>
             <HamburgerIcon />
           </Button>
           <VStack>
-            <Image src="assets/images/logo.svg" boxSize={'28'} alt="logo"  />
- 
+            <Image src="assets/images/logo.svg" boxSize={"28"} alt="logo" />
           </VStack>
         </Flex>
       </Box>
-      <Flex flex={1} align={"center"} overflowY='auto'>
+      <Flex flex={1} align={"center"} overflowY="auto">
         <List
           flexDir="column"
           w="100%"
