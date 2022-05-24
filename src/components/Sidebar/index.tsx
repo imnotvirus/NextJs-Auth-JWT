@@ -1,8 +1,8 @@
 import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Button, Heading,
-  HStack,
+  Button,
+  Flex, Image,
   List,
   ListItem,
   useBreakpointValue,
@@ -20,34 +20,43 @@ const Sidebar: React.FC<Props> = ({ isOpen, onToggle }) => {
   const show = isOpen && isMobile;
 
   return (
-    <VStack alignItems="flex-start" w={"260px"} h="full" flexShrink={0}>
-      <Box
-        position="fixed"
-        left="5"
-        top="5"
-        w={"260px"}
-        borderColor="gray.dark"
-        borderWidth={2}
-        borderRadius="lg"
-      >
-        <Box textAlign="center" w="full" pt={8} px={7} pb={4}>
-          <HStack>
-            <Heading wordBreak={"break-word"}>Barbershop do Gordin</Heading>
-            <Button onClick={onToggle}>
-              <HamburgerIcon />
-            </Button>
-          </HStack>
-        </Box>
-        {isOpen ? "open" : "closed"}
-        <List width="full" overflowY="auto">
+    <Flex
+      w={isOpen ? "260px" : "75px"}
+      pos="sticky"
+      left="5"
+      h="95vh"
+      mx="2.5vh"
+      boxShadow="0 4px 12px 0 rgba(255, 255, 255, 0.05)"
+      borderRadius={show ? "30px" : "15px"}
+      flexDir="column"
+      justifyContent="space-between"
+    >
+      <Box textAlign="center" w="full" pt={8} px={2} pb={4}>
+        <Flex flexDir={isOpen ?"row": 'column-reverse'} align="center" justify={"space-evenly"}>
+          <Button mt={2} onClick={onToggle}>
+            <HamburgerIcon />
+          </Button>
+          <VStack>
+            <Image src="assets/images/logo.svg" boxSize={'28'} alt="logo"  />
+ 
+          </VStack>
+        </Flex>
+      </Box>
+      <Flex flex={1} align={"center"} overflowY='auto'>
+        <List
+          flexDir="column"
+          w="100%"
+          alignItems={isOpen ? "flex-start" : "center"}
+          as="nav"
+        >
           {navItems.map((item, index) => (
             <ListItem key={item.label}>
-              <NavItem item={item} />
+              <NavItem item={item} show={isOpen} />
             </ListItem>
           ))}
         </List>
-      </Box>
-    </VStack>
+      </Flex>
+    </Flex>
   );
 };
 

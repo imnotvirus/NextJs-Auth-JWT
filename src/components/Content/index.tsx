@@ -1,4 +1,6 @@
 import {
+  ChakraProps,
+  Flex,
   HStack,
   useBreakpointValue,
   useDisclosure,
@@ -8,26 +10,37 @@ import React from "react";
 import SearchBar from "../Searchbar";
 import Sidebar from "../Sidebar";
 
-// import { Container } from './styles';
+type Props = ChakraProps & {
+  children: React.ReactNode;
+};
 
-const Content: React.FC = () => {
-  const { isOpen, onToggle,getDisclosureProps } = useDisclosure({defaultIsOpen: true});
-  const props = getDisclosureProps();
+const Content: React.FC<Props> = ({ children, ...props }) => {
+  const { isOpen, onToggle, getDisclosureProps } = useDisclosure({
+    defaultIsOpen: true,
+  });
   const isMobile = useBreakpointValue({ base: true, sm: false });
   const show = isOpen && isMobile;
   return (
-    <HStack w="full" flex={1} overflow="hidden">
+    <HStack height="100vh" width="full" overflow="hidden" spacing={0}>
       <Sidebar isOpen={isOpen} onToggle={onToggle} />
       <VStack
-        px={12}
+        px={4}
         pt={12}
         height="full"
         w="full"
         flex={1}
-        spacing={6}
+        spacing={2}
         overflow="hidden"
       >
-        {!show && <SearchBar />}
+        {!show && (
+          <>
+            <SearchBar />
+
+            <Flex flex={1} {...props}>
+              {children}
+            </Flex>
+          </>
+        )}
       </VStack>
     </HStack>
   );

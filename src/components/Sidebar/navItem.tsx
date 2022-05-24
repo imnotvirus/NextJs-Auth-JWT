@@ -1,16 +1,16 @@
-import { Box, Heading, HStack, Icon, Link, Text, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Heading, HStack, Icon, Link, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { NavItem as Item } from "./types";
 
 type Props = {
   item: Item;
+  show: boolean;
 };
 
-export const NavItem = ({ item }: Props) => {
+export const NavItem = ({ item, show }: Props) => {
   const { label } = item;
   const router = useRouter();
-  const isMobile = useBreakpointValue({ base: true, sm: false});
 
   if (item.type === "link") {
     const { icon } = item;
@@ -25,6 +25,7 @@ export const NavItem = ({ item }: Props) => {
             justify="flex-start"
             height={{ base: 10, "2xl": 14 }}
             transition="ease-out"
+            justifyContent={"center"}
             transitionProperty="background"
             transitionDuration="normal"
             _hover={{
@@ -34,21 +35,22 @@ export const NavItem = ({ item }: Props) => {
             <Icon
               width={5}
               height={5}
-              mr={4}
-              ml={8}
+              mx={show ? 4 : 0}
               color={isActive ? "brand.red" : "gray.light"}
               as={icon}
-            />{!isMobile &&
-            <Text
-              fontSize="md"
-              fontWeight="medium"
-              flex={1}
-              letterSpacing="wider"
-              color={isActive ? "brand.red" : "whiteAlpha.900"}
-            >
-              {label}
-            </Text>}
-            {isActive && <Box width={1} height={6} bg="brand.red" />}
+            />
+            {show && (
+              <Text
+                fontSize="md"
+                fontWeight="medium"
+                flex={1}
+                letterSpacing="wider"
+                color={isActive ? "brand.red" : "whiteAlpha.900"}
+              >
+                {label}
+              </Text>
+            )}
+            {isActive && show && <Box width={1} height={6} bg="brand.red" />}
           </HStack>
         </Link>
       </NextLink>
@@ -60,11 +62,12 @@ export const NavItem = ({ item }: Props) => {
       color="gray.light"
       fontWeight="normal"
       textTransform="uppercase"
-      letterSpacing={6}
+      letterSpacing={show ? 6 : 2}
       fontSize="sm"
-      ml={8}
+      ml={show ? 8 : 2}
       mt={{ base: 6, "2xl": 8 }}
       mb={2}
+      display={show ? "block" : "none"}
     >
       {label}
     </Heading>
