@@ -1,7 +1,7 @@
 import { BsBoxArrowLeft } from "react-icons/bs";
 import {
-    FaDatabase, FaHeart, FaHome, FaMusic,
-    FaUserAlt
+  FaDatabase, FaHeart, FaHome, FaMusic,
+  FaUserAlt
 } from "react-icons/fa";
 import { GiBackwardTime, GiMoneyStack } from "react-icons/gi";
 import { IoIosSettings } from "react-icons/io";

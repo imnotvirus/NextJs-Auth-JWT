@@ -5,33 +5,30 @@ import {
   Flex,
   Image,
   List,
-  ListItem,
-  useBreakpointValue,
-  VStack
+  ListItem, VStack
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import React from "react";
 import { navItems } from "./navData";
 import { NavItem } from "./navItem";
-
 type Props = {
   isOpen: boolean;
   onToggle: () => void;
 };
 const Sidebar: React.FC<Props> = ({ isOpen, onToggle }) => {
-  const isMobile = useBreakpointValue({ base: true, sm: false });
-  const show = isOpen && isMobile;
+ 
 
   return (
     <Flex
       as={motion.div}
       w={isOpen ? "260px" : "75px"}
-      pos="sticky"
+      zIndex={2}
+      bg={'gray.800'}
       left="5"
       h="95vh"
       mx="2.5vh"
       boxShadow="0 4px 12px 0 rgba(255, 255, 255, 0.05)"
-      borderRadius={show ? "30px" : "15px"}
+      borderRadius={isOpen ? "30px" : "15px"}
       flexDir="column"
       justifyContent="space-between"
       transition='0.5s all'
@@ -57,7 +54,7 @@ const Sidebar: React.FC<Props> = ({ isOpen, onToggle }) => {
           alignItems={isOpen ? "flex-start" : "center"}
           as="nav"
         >
-          {navItems.map((item, index) => (
+          {navItems.map((item) => (
             <ListItem key={item.label}>
               <NavItem item={item} show={isOpen} />
             </ListItem>

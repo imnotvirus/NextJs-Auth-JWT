@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { parseCookies, setCookie } from "nookies";
+import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { createContext, useContext, useEffect, useState } from "react";
 import { api } from "../services/api";
 type userProps = {
@@ -15,6 +15,7 @@ type AuthContextType = {
   isAuthenticated: boolean;
   user?: userProps;
   signIn: (data: signInData) => Promise<void>;
+  logOut: () => void;
 };
 export const AuthContext = createContext({} as AuthContextType);
 
@@ -51,8 +52,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     router.push("/dashboard");
   };
 
+  const logOut = () => {
+    setUserInfo(undefined);
+    destroyCookie(undefined, "next-token");
+    router.push("/");
+  };
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user: userInfo, signIn }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, user: userInfo, signIn, logOut }}
+    >
       {children}
     </AuthContext.Provider>
   );

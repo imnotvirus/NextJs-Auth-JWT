@@ -12,6 +12,8 @@ export const NavItem = ({ item, show }: Props) => {
   const { label } = item;
   const router = useRouter();
 
+
+  
   if (item.type === "link") {
     const { icon } = item;
 

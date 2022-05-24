@@ -15,11 +15,10 @@ type Props = ChakraProps & {
 };
 
 const Content: React.FC<Props> = ({ children, ...props }) => {
-  const { isOpen, onToggle, getDisclosureProps } = useDisclosure({
+  const { isOpen, onToggle } = useDisclosure({
     defaultIsOpen: true,
   });
   const isMobile = useBreakpointValue({ base: true, sm: false });
-  const show = isOpen && isMobile;
   return (
     <HStack height="100vh" width="full" overflow="hidden" spacing={0}>
       <Sidebar isOpen={isOpen} onToggle={onToggle} />
@@ -32,15 +31,17 @@ const Content: React.FC<Props> = ({ children, ...props }) => {
         spacing={2}
         overflow="hidden"
       >
-        {!show && (
-          <>
-            <SearchBar />
+        <VStack
+          display={{ base: !isOpen ? "inherit" : "none", sm: "inherit" }}
+          flex={1}
+          w="full"
+        >
+          <SearchBar />
 
-            <Flex flex={1} {...props}>
-              {children}
-            </Flex>
-          </>
-        )}
+          <Flex flex={1} {...props}>
+            {children}
+          </Flex>
+        </VStack>
       </VStack>
     </HStack>
   );

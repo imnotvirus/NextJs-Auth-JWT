@@ -1,16 +1,19 @@
 import { IconType } from "react-icons/lib";
 
 type HeaderItem = {
-  type: 'header';
+  type: "header";
 };
 
 type LinkItem = {
-  type: 'link';
+  type: "link";
   icon: IconType;
   href: string;
 };
-
-type ItemTypeProps = HeaderItem | LinkItem;
+type ActionItem = {
+  type: "action";
+  icon: IconType;
+};
+type ItemTypeProps = HeaderItem | LinkItem | ActionItem;
 
 export type NavItem = ItemTypeProps & {
   label: string;
